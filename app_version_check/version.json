@@ -1,0 +1,8 @@
+{
+    "name": "In App Update Desktop",
+    "version": 1.1,
+    "description": ["Added decriment button"],
+    "macos_file_name": "installers/macos/in_app_update_desktop.dmg",
+    "windows_file_name": "installers/windows/in_app_update_desktop.exe",
+    "linux_file_name": ""
+}
