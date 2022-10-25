@@ -156,6 +156,12 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {});
       },
     );
+    debugPrint("File Downloaded Path: $downloadedFilePath");
+    if (Platform.isWindows) {
+      await openExeFile(downloadedFilePath);
+    }
+    isDownloading = false;
+    setState(() {});
   }
 
   @override
