@@ -48,6 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
+
   showUpdateDialog(Map<String, dynamic> versionJson) {
     final version = versionJson['version'];
     final updates = versionJson['description'] as List;
@@ -123,7 +129,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Map<String, dynamic>> loadJsonFromGithub() async {
-    final response = await http.read(Uri.parse(''));
+    final response = await http.read(
+      Uri.parse(
+        'https://raw.githubusercontent.com/vtaraikovich/in_app_update_desktop/master/app_version_check/version.json',
+      ),
+    );
     return jsonDecode(response);
   }
 
@@ -137,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
         "${(await getApplicationDocumentsDirectory()).path}/$fileName";
 
     await dio.download(
-      'https://github.com/vtaraikovich/in_app_update_desktop/app_version_check/$appPath',
+      'https://github.com/vtaraikovich/in_app_update_desktop/tree/master/app_version_check/$appPath',
       downloadedFilePath,
       onReceiveProgress: (received, total) {
         final progress = (received / total) * 100;
@@ -202,10 +212,20 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
+          Row(
+            children: [
+              FloatingActionButton(
+                onPressed: _decrementCounter,
+                tooltip: 'Decrement',
+                child: const Icon(Icons.remove),
+              ),
+              const SizedBox(width: 8.0),
+              FloatingActionButton(
+                onPressed: _incrementCounter,
+                tooltip: 'Increment',
+                child: const Icon(Icons.add),
+              ),
+            ],
           ),
         ],
       ),
