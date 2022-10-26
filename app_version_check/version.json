@@ -1,7 +1,7 @@
 {
     "name": "In App Update Desktop",
-    "version": 1.2  ,
-    "description": ["Added decriment button"],
+    "version": 1.3,
+    "description": ["Added clear button"],
     "macos_file_name": "installers/macos/in_app_update_desktop.dmg",
     "windows_file_name": "installers/windows/in_app_update_desktop.exe",
     "linux_file_name": ""

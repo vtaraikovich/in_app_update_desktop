@@ -54,6 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _clearCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
   showUpdateDialog(Map<String, dynamic> versionJson) {
     final version = versionJson['version'];
     final updates = versionJson['description'] as List;
@@ -223,6 +229,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: _decrementCounter,
                 tooltip: 'Decrement',
                 child: const Icon(Icons.remove),
+              ),
+              const SizedBox(width: 8.0),
+              FloatingActionButton(
+                onPressed: _clearCounter,
+                tooltip: 'Clear',
+                child: const Icon(Icons.clear),
               ),
               const SizedBox(width: 8.0),
               FloatingActionButton(
