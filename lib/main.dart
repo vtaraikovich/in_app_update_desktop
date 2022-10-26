@@ -147,11 +147,10 @@ class _MyHomePageState extends State<MyHomePage> {
         "${(await getApplicationDocumentsDirectory()).path}/$fileName";
 
     await dio.download(
-      'https://github.com/vtaraikovich/in_app_update_desktop/tree/master/app_version_check/$appPath',
+      'https://raw.githubusercontent.com/vtaraikovich/in_app_update_desktop/master/app_version_check/$appPath',
       downloadedFilePath,
       onReceiveProgress: (received, total) {
         final progress = (received / total) * 100;
-        debugPrint('Rec: $received, Total: $total, $progress%');
         downloadProgress = double.parse(progress.toStringAsFixed(1));
         setState(() {});
       },
@@ -184,19 +183,6 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            if (isDownloading)
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                color: Colors.black.withOpacity(0.3),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(),
-                    Text('${downloadProgress.toStringAsFixed(1)} %'),
-                  ],
-                ),
-              )
           ],
         ),
       ),
@@ -218,6 +204,19 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
+          if (isDownloading)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 24.0,
+                  height: 24.0,
+                  child: CircularProgressIndicator(),
+                ),
+                const SizedBox(width: 8.0),
+                Text('${downloadProgress.toStringAsFixed(1)} %'),
+              ],
+            ),
           Row(
             children: [
               FloatingActionButton(
