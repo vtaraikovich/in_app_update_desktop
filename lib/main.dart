@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'In App Update'),
     );
   }
 }
@@ -173,6 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple[700],
         title: Text(widget.title),
       ),
       body: Center(
@@ -226,18 +227,21 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: [
               FloatingActionButton(
+                backgroundColor: Colors.purple[700],
                 onPressed: _decrementCounter,
                 tooltip: 'Decrement',
                 child: const Icon(Icons.remove),
               ),
               const SizedBox(width: 8.0),
               FloatingActionButton(
+                backgroundColor: Colors.purple[700],
                 onPressed: _clearCounter,
                 tooltip: 'Clear',
                 child: const Icon(Icons.clear),
               ),
               const SizedBox(width: 8.0),
               FloatingActionButton(
+                backgroundColor: Colors.purple[700],
                 onPressed: _incrementCounter,
                 tooltip: 'Increment',
                 child: const Icon(Icons.add),
