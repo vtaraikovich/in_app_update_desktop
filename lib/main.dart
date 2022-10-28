@@ -121,11 +121,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> openDMGFile(String filePath) async {
-    await Process.start(
-        "MOUNTDEV=\$(hdiutil mount '$filePath' | awk '/dev.disk/{print\$1}')",
-        []).then((value) {
-      debugPrint("Value: $value");
-    });
+    await Process.run(
+      "hdiutil mount $filePath && cp -R '/Volumes/InAppUpdateDesktop/in_app_update_desktop.app' /Applications && hdiutil unmount '/Volumes/InAppUpdateDesktop/' && rm $filePath",
+      [],
+      runInShell: true,
+    ).then(
+      (ProcessResult results) {
+        print('${results.stdout}');
+        if (results.exitCode != 0) {
+          print('STDOUT ${results.stdout}');
+          print('STDERR ${results.stderr}');
+          print('EXIT CODE ${results.exitCode}');
+          exit(1);
+        }
+      },
+    );
   }
 
   Future<void> _checkForUpdates() async {
@@ -164,6 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint("File Downloaded Path: $downloadedFilePath");
     if (Platform.isWindows) {
       await openExeFile(downloadedFilePath);
+    }
+    if (Platform.isMacOS) {
+      await openDMGFile(downloadedFilePath);
     }
     isDownloading = false;
     setState(() {});
