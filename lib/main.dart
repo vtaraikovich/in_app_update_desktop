@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> openDMGFile(String filePath) async {
     await Process.run(
-      "hdiutil mount $filePath && cp -R '/Volumes/InAppUpdateDesktop/in_app_update_desktop.app' /Applications && hdiutil unmount '/Volumes/InAppUpdateDesktop/' && rm $filePath",
+      'hdiutil mount $filePath && cp -R /Volumes/InAppUpdateDesktop/in_app_update_desktop.app /Applications && hdiutil unmount /Volumes/InAppUpdateDesktop/ && rm $filePath',
       [],
       runInShell: true,
     ).then(
