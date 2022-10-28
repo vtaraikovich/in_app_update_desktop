@@ -1,6 +1,6 @@
 {
     "name": "In App Update Desktop",
-    "version": 1.4,
+    "version": 1.5,
     "description": ["Change app backround"],
     "macos_file_name": "installers/macos/in_app_update_desktop.dmg",
     "windows_file_name": "installers/windows/in_app_update_desktop.exe",
