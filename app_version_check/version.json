@@ -1,8 +1,8 @@
 {
     "name": "In App Update Desktop",
-    "version": 1.6,
-    "description": ["Fixes"],
+    "version": 1.7,
+    "description": ["ADd Linux support"],
     "macos_file_name": "installers/macos/in_app_update_desktop.dmg",
     "windows_file_name": "installers/windows/in_app_update_desktop.exe",
-    "linux_file_name": ""
+    "linux_file_name": "installers/linux/in_app_update_desktop.deb"
 } 

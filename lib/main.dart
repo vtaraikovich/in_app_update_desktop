@@ -106,6 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (Platform.isWindows) {
                     downloadNewVersion(versionJson['windows_file_name']);
                   }
+                  if (Platform.isLinux) {
+                    downloadNewVersion(versionJson['linux_file_name']);
+                  }
                 },
                 icon: const Icon(Icons.update),
                 label: const Text('Update'),
@@ -120,22 +123,16 @@ class _MyHomePageState extends State<MyHomePage> {
     await Process.start(filePath, ["-t", "-l", "1000"]).then((value) {});
   }
 
+  Future<void> openDebFile(String filePath) async {
+    await Process.run('sh', ['-c', 'dpkg -i $filePath']);
+  }
+
   Future<void> openDMGFile(String filePath) async {
-    await Process.run(
+    await Process.run('sh', [
+      '-c',
       'hdiutil mount $filePath && cp -R /Volumes/InAppUpdateDesktop/in_app_update_desktop.app /Applications && hdiutil unmount /Volumes/InAppUpdateDesktop/ && rm $filePath',
-      [],
-      runInShell: true,
-    ).then(
-      (ProcessResult results) {
-        print('${results.stdout}');
-        if (results.exitCode != 0) {
-          print('STDOUT ${results.stdout}');
-          print('STDERR ${results.stderr}');
-          print('EXIT CODE ${results.exitCode}');
-          exit(1);
-        }
-      },
-    );
+    ]);
+    print('Opened on Linux');
   }
 
   Future<void> _checkForUpdates() async {
@@ -177,6 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (Platform.isMacOS) {
       await openDMGFile(downloadedFilePath);
+    }
+    if (Platform.isLinux) {
+      await openDebFile(downloadedFilePath);
     }
     isDownloading = false;
     setState(() {});
