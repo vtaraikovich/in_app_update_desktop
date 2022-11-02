@@ -124,7 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> openDebFile(String filePath) async {
-    await Process.run('sh', ['-c', 'dpkg -i $filePath']);
+    await Process.run('sh', ['-c', 'sudo -A dpkg -i $filePath'])
+        .then((ProcessResult result) {
+      print(result.stdout);
+      if (result.exitCode != 0) {
+        print('stdout: ${result.stdout}');
+        print('stderr ${result.stderr}');
+        print('ExitCode: ${result.exitCode}');
+      }
+    });
   }
 
   Future<void> openDMGFile(String filePath) async {
