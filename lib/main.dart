@@ -124,15 +124,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> openDebFile(String filePath) async {
-    await Process.run('sh', ['-c', 'sudo -A dpkg -i $filePath'])
-        .then((ProcessResult result) {
-      print(result.stdout);
-      if (result.exitCode != 0) {
-        print('stdout: ${result.stdout}');
-        print('stderr ${result.stderr}');
-        print('ExitCode: ${result.exitCode}');
-      }
-    });
+    //TODO restart application after update (in implemntation)
+    await Process.run('sh', [
+      '-c',
+      'x-terminal-emulator -e bash ~/Desktop/linux_installer.sh',
+    ]);
   }
 
   Future<void> openDMGFile(String filePath) async {
@@ -140,7 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
       '-c',
       'hdiutil mount $filePath && cp -R /Volumes/InAppUpdateDesktop/in_app_update_desktop.app /Applications && hdiutil unmount /Volumes/InAppUpdateDesktop/ && rm $filePath',
     ]);
-    print('Opened on Linux');
   }
 
   Future<void> _checkForUpdates() async {
@@ -164,8 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
 
     final Dio dio = Dio();
-    downloadedFilePath =
-        "${(await getApplicationDocumentsDirectory()).path}/$fileName";
+    downloadedFilePath = "${(await getDownloadsDirectory())!.path}/$fileName";
 
     await dio.download(
       'https://raw.githubusercontent.com/vtaraikovich/in_app_update_desktop/master/app_version_check/$appPath',
